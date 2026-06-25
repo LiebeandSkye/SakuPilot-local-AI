@@ -1,0 +1,260 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "hello",
+        "hi",
+        "hey",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "yo",
+        "hiya",
+        "howdy",
+        "hey there",
+        "hello there",
+        "hi bot",
+        "are you there",
+        "can we chat",
+        "start chat",
+        "let's talk",
+        "I need help",
+        "anyone home",
+        "what's up",
+        "nice to meet you"
+      ],
+      "responses": [
+        "Hello. I'm online and ready to help.",
+        "Hi there. Ask me anything from my local knowledge base.",
+        "Hey. I'm your local Python NLP chatbot.",
+        "Welcome back. What would you like to explore?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "bye",
+        "goodbye",
+        "see you",
+        "see you later",
+        "talk to you later",
+        "catch you later",
+        "I'm leaving",
+        "quit",
+        "exit",
+        "close chat",
+        "end conversation",
+        "that's all",
+        "thanks bye",
+        "farewell",
+        "have a nice day",
+        "good night"
+      ],
+      "responses": [
+        "Goodbye. I'll be here whenever you want to chat again.",
+        "See you later. Your chat can be cleared from the sidebar.",
+        "Take care. The local model will stay ready for next time.",
+        "Bye for now. Thanks for testing the chatbot."
+      ]
+    },
+    {
+      "tag": "about_bot",
+      "patterns": [
+        "who are you",
+        "what are you",
+        "tell me about yourself",
+        "what is this bot",
+        "are you an AI",
+        "are you chatgpt",
+        "are you claude",
+        "what model are you",
+        "how do you work",
+        "explain yourself",
+        "what powers you",
+        "what technology do you use",
+        "are you local",
+        "do you use openai",
+        "do you call an API",
+        "what kind of chatbot is this"
+      ],
+      "responses": [
+        "I'm a self-contained local chatbot built with Python, NLTK, TF-IDF, and an SVC classifier.",
+        "I do not call external LLM APIs. I classify your message against local intents and choose a matching response.",
+        "I'm a lightweight intent-matching assistant trained from the local intents.json file.",
+        "Think of me as a classic NLP chatbot: fast, private, local, and easy to extend."
+      ]
+    },
+    {
+      "tag": "capabilities",
+      "patterns": [
+        "what can you do",
+        "what are your capabilities",
+        "how can you help",
+        "help me",
+        "show me features",
+        "what features do you have",
+        "what questions can I ask",
+        "what topics do you know",
+        "can you answer questions",
+        "can you learn new things",
+        "can I customize you",
+        "what is supported",
+        "give me examples",
+        "what commands are available",
+        "how should I use this"
+      ],
+      "responses": [
+        "I can greet you, explain how I work, answer starter knowledge-base questions, and show how local intents can power a chatbot.",
+        "You can add more tags, patterns, and responses to intents.json, then the app will retrain automatically.",
+        "I work best with short natural-language messages that resemble the examples in my local training data.",
+        "Try asking about setup, privacy, training, editing intents, or what technology this app uses."
+      ]
+    },
+    {
+      "tag": "training",
+      "patterns": [
+        "how are you trained",
+        "train the bot",
+        "training data",
+        "where is your data",
+        "how do I add training data",
+        "what is intents json",
+        "how does the model learn",
+        "can you retrain",
+        "when do you retrain",
+        "what happens when intents changes",
+        "reload intents",
+        "update knowledge base",
+        "how do I teach you",
+        "add a new intent",
+        "can you adapt while running",
+        "does training happen automatically"
+      ],
+      "responses": [
+        "Training data lives in intents.json. Each intent has a tag, example patterns, and possible responses.",
+        "On startup, I train a TF-IDF plus SVC model and save it as chatbot_model.pkl.",
+        "If intents.json changes while the app is running, the app detects the change and retrains cleanly on the next rerun.",
+        "To teach me more, add new patterns and responses to intents.json. Keep examples short, varied, and specific."
+      ]
+    },
+    {
+      "tag": "privacy",
+      "patterns": [
+        "is this private",
+        "do you send my data anywhere",
+        "where do my messages go",
+        "is there an external api",
+        "do you use the internet",
+        "are conversations uploaded",
+        "is my chat saved",
+        "what about privacy",
+        "is this offline",
+        "can this run locally",
+        "does it call openai",
+        "does it call google",
+        "does it call anthropic"
+      ],
+      "responses": [
+        "This app is designed to run locally and does not call external LLM APIs.",
+        "Messages stay inside the Streamlit session state unless you modify the code to store them elsewhere.",
+        "The classifier uses only the local intents.json file and the saved chatbot_model.pkl artifact.",
+        "You can run the app offline after dependencies are installed."
+      ]
+    },
+    {
+      "tag": "setup",
+      "patterns": [
+        "how do I run this",
+        "setup instructions",
+        "install packages",
+        "how to start",
+        "run locally",
+        "start the app",
+        "launch streamlit",
+        "what command should I use",
+        "how do I install dependencies",
+        "create virtual environment",
+        "pip install",
+        "streamlit run",
+        "local setup",
+        "developer setup"
+      ],
+      "responses": [
+        "For the React UI: run python server.py in one terminal and npm run dev in frontend/. Open http://127.0.0.1:5173",
+        "For the Streamlit UI: run streamlit run app.py and open http://localhost:8501",
+        "Install dependencies first with pip install -r requirements.txt (and npm install inside frontend for the React UI).",
+        "The app trains automatically at startup, so there is no separate training command."
+      ]
+    },
+    {
+      "tag": "fallback_help",
+      "patterns": [
+        "I don't understand",
+        "that did not answer",
+        "you are confused",
+        "wrong answer",
+        "not helpful",
+        "try again",
+        "can you clarify",
+        "what do you mean",
+        "explain that",
+        "give a better answer",
+        "that is not what I asked",
+        "help with unknown question"
+      ],
+      "responses": [
+        "I may need more examples in intents.json for that topic. Try rephrasing with simpler wording.",
+        "This local bot matches intents rather than generating open-ended answers, so it works best with trained topics.",
+        "If you want me to understand that topic, add a new intent with several example patterns.",
+        "I can answer best when your message is close to one of my local training examples."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "thanks",
+        "thank you",
+        "appreciate it",
+        "that helps",
+        "nice",
+        "great",
+        "awesome",
+        "cool",
+        "perfect",
+        "good job",
+        "you helped me",
+        "many thanks"
+      ],
+      "responses": [
+        "You're welcome.",
+        "Happy to help.",
+        "Glad that helped.",
+        "Anytime. Keep expanding intents.json to make me smarter."
+      ]
+    },
+    {
+      "tag": "model_details",
+      "patterns": [
+        "what is tfidf",
+        "what is svc",
+        "why use scikit learn",
+        "explain the classifier",
+        "what algorithm is used",
+        "is this machine learning",
+        "how does intent matching work",
+        "how are messages classified",
+        "what is confidence",
+        "how do you choose a response",
+        "why use nlp",
+        "what does nltk do"
+      ],
+      "responses": [
+        "TF-IDF turns text into weighted word features, and SVC learns boundaries between intent classes.",
+        "NLTK handles lightweight tokenization and stemming, while scikit-learn trains the classifier.",
+        "I classify your message into the most likely intent tag, then pick one response from that tag.",
+        "The confidence score comes from the classifier probability for the predicted intent."
+      ]
+    }
+  ]
+}
