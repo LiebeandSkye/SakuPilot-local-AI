@@ -255,6 +255,308 @@
         "I classify your message into the most likely intent tag, then pick one response from that tag.",
         "The confidence score comes from the classifier probability for the predicted intent."
       ]
+    },
+  {
+      "tag": "code_troubleshooting",
+      "patterns": [
+        "my code is broken",
+        "how do I fix an error",
+        "debugging tips",
+        "syntax error",
+        "indentation error python",
+        "null pointer exception",
+        "how to read a stack trace",
+        "why is my code crashing",
+        "fix a bug",
+        "code help",
+        "throw an error",
+        "print statement debugging",
+        "how to use a debugger",
+        "variable is undefined"
+      ],
+      "responses": [
+        "When debugging, start by reading the very last line of the stack trace; it usually states the exact exception.",
+        "Check your variables! Add print statements or use a debugger like pdb (Python) or VS Code breakpoints to inspect values before the crash.",
+        "Syntax and Indentation errors mean the interpreter can't parse the code layout. Double-check your tabs, spaces, and missing colons (:).",
+        "Isolating the issue helps. Try commenting out sections of code until the error disappears to find the exact line responsible."
+      ]
+    },
+    {
+      "tag": "general_knowledge_sci",
+      "patterns": [
+        "tell me a science fact",
+        "how far is the sun",
+        "what is photosynthesis",
+        "explain gravity",
+        "what is an atom",
+        "speed of light",
+        "how old is the earth",
+        "what is DNA",
+        "periodic table",
+        "basic science questions",
+        "why is the sky blue"
+      ],
+      "responses": [
+        "The speed of light in a vacuum is exactly 299,792,458 meters per second (about 186,000 miles per second).",
+        "Photosynthesis is the process used by plants to convert light energy, normally from the Sun, into chemical energy (sugar).",
+        "The sky is blue because of Rayleigh scattering. Earth's atmosphere scatters shorter wavelengths of light (blue and violet) in all directions.",
+        "An atom is the basic unit of a chemical element, consisting of a nucleus of protons and neutrons, surrounded by electrons."
+      ]
+    },
+    {
+      "tag": "math_logic",
+      "patterns": [
+        "solve a math problem",
+        "what is order of operations",
+        "explain algebra",
+        "how to calculate percentages",
+        "pemdas",
+        "what is a prime number",
+        "logic puzzle",
+        "mental math tips",
+        "geometry basics"
+      ],
+      "responses": [
+        "Remember PEMDAS/BODMAS for order of operations: Parentheses/Brackets, Exponents/Orders, Multiplication & Division, Addition & Subtraction.",
+        "To find a percentage, divide the part by the whole and multiply by 100. For example, 4 out of 20 is (4/20)*100 = 20%.",
+        "A prime number is a whole number greater than 1 whose only divisors are 1 and itself (e.g., 2, 3, 5, 7, 11, 13).",
+        "Need to solve an algebraic equation? The main rule is to always perform the exact same operation on both sides of the equals sign to isolate your variable."
+      ]
+    },
+    {
+      "tag": "translation_sim",
+      "patterns": [
+        "translate a word",
+        "how do you say hello in spanish",
+        "french for thank you",
+        "say something in german",
+        "japanese greeting",
+        "language practice",
+        "translate to english",
+        "multilingual phrases"
+      ],
+      "responses": [
+        "I match intents rather than translating raw sentences dynamically, but here are some basics: 'Hello' is 'Hola' (Spanish), 'Bonjour' (French), and 'Hallo' (German).",
+        "To say thank you: 'Gracias' in Spanish, 'Merci' in French, and 'Arigato' in Japanese.",
+        "If you want to support live translation, you can extend my code by importing a library like `googletrans` or `deep-translator` into your execution script!"
+      ]
+    },
+    {
+      "tag": "creative_prompt",
+      "patterns": [
+        "write a story",
+        "give me a writing prompt",
+        "tell a poem",
+        "creative ideas",
+        "bored give me a prompt",
+        "sci fi ideas",
+        "fantasy concept",
+        " plot twist ideas"
+      ],
+      "responses": [
+        "Writing prompt: A botanist on a desolate planet discovers a plant that grows backwards in time, carrying messages from the future.",
+        "Writing prompt: In a world where memories can be bought and sold, someone inherits a vault of memories belonging to a famous historical figure.",
+        "Poetic spark: A clock that counts down not to midnight, but to the exact moment you will meet your oldest friend again.",
+        "Plot twist idea: The mentor character who passed away early in the journey didn't die—they fabricated it to test if the protagonist was truly ready."
+      ]
+    },
+    {
+      "tag": "data_structures",
+      "patterns": [
+        "what is a list",
+        "dictionary vs list",
+        "explain array",
+        "what is a stack",
+        "queue explanation",
+        "linked list",
+        "hash maps",
+        "tuples vs lists",
+        "when to use a set",
+        "key value pairs"
+      ],
+      "responses": [
+        "A list/array is an ordered sequence of items. Use it when order matters and you need to access elements by their index position.",
+        "A dictionary (or hash map) stores key-value pairs. It is highly optimized for retrieving data quickly if you know the lookup key.",
+        "Tuples are immutable lists—once created, their contents cannot change. This makes them safer for fixed data structures.",
+        "A set is an unordered collection of unique elements. It is incredibly efficient for checking item membership and eliminating duplicates."
+      ]
+    },
+    {
+      "tag": "git_version_control",
+      "patterns": [
+        "how to use git",
+        "git commit command",
+        "what is github",
+        "push code to repo",
+        "git clone tutorial",
+        "resolve merge conflict",
+        "git branch",
+        "init repository",
+        "pull latest changes"
+      ],
+      "responses": [
+        "To save changes locally: use `git add .` to stage your files, followed by `git commit -m 'Your commit message here'`.",
+        "To sync with a remote repository: use `git pull` to fetch and integrate remote changes, and `git push origin main` to upload your local commits.",
+        "To start a new project branch safely away from production: run `git checkout -b feature-branch-name`.",
+        "Merge conflicts occur when two people modify the same lines of a file. Open the affected file, look for the `<<<<<<<` and `>>>>>>>` markers, pick the correct code, stage, and commit."
+      ]
+    },
+    {
+      "tag": "web_development",
+      "patterns": [
+        "what is html",
+        "how does css work",
+        "javascript basics",
+        "frontend vs backend",
+        "what is a framework",
+        "how do APIs work",
+        "what is a REST API",
+        "http methods"
+      ],
+      "responses": [
+        "HTML provides the structure of a webpage, CSS provides the styling and layout, and JavaScript provides the interactive logic.",
+        "Frontend refers to what the user sees and interacts with in the browser. Backend refers to the server, application logic, and database handling requests behind the scenes.",
+        "A REST API allows different systems to communicate over HTTP using standard methods like GET (read), POST (create), PUT (update), and DELETE (destroy).",
+        "Frameworks like React or Vue (frontend) and Django or Express (backend) provide pre-written architectural blueprints so you don't build apps entirely from scratch."
+      ]
+    },
+    {
+      "tag": "database_basics",
+      "patterns": [
+        "what is a database",
+        "sql vs nosql",
+        "relational database",
+        "how to write a query",
+        "what is mongodb",
+        "postgres vs mysql",
+        "database primary key"
+      ],
+      "responses": [
+        "SQL (relational) databases use tables with structured rows and columns (like PostgreSQL or MySQL). NoSQL databases use flexible formats like JSON documents (like MongoDB).",
+        "A Primary Key is a unique identifier for a record in a database table. No two rows can share the exact same primary key.",
+        "A basic SQL query looks like this: `SELECT column_name FROM table_name WHERE condition = true;`",
+        "Use SQL databases when data relationships are highly structured and consistent. Use NoSQL when your data structures are dynamic, evolving, or massive and unstructured."
+      ]
+    },
+    {
+      "tag": "productivity_tips",
+      "patterns": [
+        "how to stay focused",
+        "pomodoro technique",
+        "time management",
+        "stop procrastinating",
+        "coding workflow",
+        "organize my tasks",
+        "burnout recovery"
+      ],
+      "responses": [
+        "Try the Pomodoro Technique: Work intensely for 25 minutes, then take a hard 5-minute break. Repeat 4 times, then take a longer 15-30 minute break.",
+        "Break massive tasks down into micro-objectives. If 'Build Chatbot' feels overwhelming, change your goal to 'Write 5 patterns for one intent.'",
+        "Protect your focus environment. Close unnecessary browser tabs, put your phone in another room, and turn off non-essential notifications.",
+        "To avoid burnout, set clear boundaries for when your workday ends. Stepping away from the screen often helps your brain solve tricky logic problems in the background."
+      ]
+    },
+    {
+      "tag": "ai_terminology",
+      "patterns": [
+        "what is artificial intelligence",
+        "explain machine learning",
+        "deep learning vs ML",
+        "neural networks explanation",
+        "what is an LLM",
+        "how do neural networks work",
+        "AI concepts",
+        "supervised vs unsupervised",
+        "generative AI description",
+        "what is prompt engineering"
+      ],
+      "responses": [
+        "Artificial Intelligence (AI) is the broad field of creating systems that mimic human intelligence. Machine Learning (ML) is a subset of AI where systems learn from data without explicit programming, and Deep Learning uses multi-layered neural networks.",
+        "A Large Language Model (LLM) is a deep learning model trained on massive text corpora to predict the next word or token. It is much larger and more open-ended than local NLP intent matching engines.",
+        "Supervised learning trains models on labeled data (like this chatbot's intents), while unsupervised learning finds hidden structures in unlabeled datasets (like clustering algorithms).",
+        "Prompt engineering is the practice of structuring text inputs to large generative models to retrieve the most accurate and useful outputs."
+      ]
+    },
+    {
+      "tag": "cloud_computing",
+      "patterns": [
+        "what is the cloud",
+        "explain cloud computing",
+        "aws vs gcp",
+        "what is serverless",
+        "deploy an app to cloud",
+        "cloud hosting options",
+        "what is docker",
+        "kubernetes explanation",
+        "what is microservices",
+        "iaas vs paas vs saas"
+      ],
+      "responses": [
+        "Cloud computing refers to delivering computing services (servers, storage, databases, networking, software) over the internet. Major providers include Amazon Web Services (AWS), Google Cloud (GCP), and Microsoft Azure.",
+        "Serverless computing allows developers to build and run applications without managing physical infrastructure. The cloud provider automatically provisions, scales, and shuts down servers as needed (e.g. AWS Lambda, Google Cloud Functions).",
+        "Docker packages applications and their environment dependencies into lightweight, standalone containers to ensure they run identically across development, staging, and production servers.",
+        "Infrastructure as a Service (IaaS) gives you raw VMs, Platform as a Service (PaaS) gives you managed runtimes (like Heroku or Google App Engine), and Software as a Service (SaaS) delivers full end-user apps (like Google Workspace)."
+      ]
+    },
+    {
+      "tag": "python_tips",
+      "patterns": [
+        "python decorators",
+        "how do generators work in python",
+        "list comprehension syntax",
+        "what is a virtual environment",
+        "python poetry vs pip",
+        "dunder methods",
+        "python memory management",
+        "what are lambda functions python",
+        "args and kwargs explanation"
+      ],
+      "responses": [
+        "A Python decorator is a design pattern that allows you to modify the behavior of a function or class. They are represented by the `@` symbol placed above the function definition.",
+        "List comprehensions provide a concise way to create lists. Syntax: `[expression for item in iterable if condition]`. For example: `[x*x for x in range(10) if x % 2 == 0]`.",
+        "Virtual environments (`venv` or `conda`) isolate Python package dependencies for different projects, preventing version conflicts between global library installations.",
+        "`*args` allows a function to accept any number of positional arguments, while `**kwargs` allows it to accept any number of keyword (named) arguments as a dictionary."
+      ]
+    },
+    {
+      "tag": "linux_bash",
+      "patterns": [
+        "linux commands cheat sheet",
+        "how to use bash",
+        "list files in terminal",
+        "find file in command line",
+        "change directory command",
+        "grep usage",
+        "chmod permissions linux",
+        "create a script",
+        "what is shell scripting",
+        "environment variables terminal"
+      ],
+      "responses": [
+        "Some common Bash commands: `ls` (list directory contents), `cd <dir>` (change directory), `pwd` (print current working directory), and `mkdir <dir>` (create new folder).",
+        "`grep` is a powerful tool to search text using patterns. Example: `grep 'search_term' file.txt` finds matching lines in `file.txt`.",
+        "Use `chmod` to change file permissions. E.g., `chmod +x script.sh` makes a script executable, allowing you to run it using `./script.sh`.",
+        "Environment variables store system configuration settings. In bash, write `export KEY=value` to set a variable, and access it with `$KEY`."
+      ]
+    },
+    {
+      "tag": "api_design",
+      "patterns": [
+        "how to design an API",
+        "rest vs graphql",
+        "what is cors",
+        "explain http status codes",
+        "crud operations",
+        "request headers vs parameters",
+        "what is a webhook",
+        "api authentication options"
+      ],
+      "responses": [
+        "REST APIs use standard HTTP verbs (GET, POST, PUT, DELETE) representing CRUD actions on resources. GraphQL is a query language allowing clients to request exactly the data fields they need.",
+        "CORS (Cross-Origin Resource Sharing) is a security mechanism enforced by browsers that controls whether web apps running at one origin can access resources on a different origin.",
+        "Standard HTTP status codes: `200 OK` (success), `201 Created` (successful resource creation), `400 Bad Request` (client input error), `401 Unauthorized` (missing auth credentials), `404 Not Found` (resource doesn't exist), and `500 Internal Server Error` (backend crashed).",
+        "A webhook is an automated message sent by an app when something happens. Unlike APIs where you pull data, webhooks push data to a predefined URL immediately."
+      ]
     }
   ]
 }

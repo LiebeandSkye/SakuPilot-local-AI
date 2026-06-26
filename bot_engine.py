@@ -15,7 +15,7 @@ from sklearn.svm import SVC
 BASE_DIR = Path(__file__).resolve().parent
 INTENTS_PATH = BASE_DIR / "intents.json"
 MODEL_PATH = BASE_DIR / "chatbot_model.pkl"
-CONFIDENCE_THRESHOLD = 0.24
+CONFIDENCE_THRESHOLD = 0.15
 
 stemmer = PorterStemmer()
 
@@ -161,11 +161,24 @@ def generate_response(message: str, runtime: BotRuntime) -> dict[str, Any]:
             "confidence": 0.0,
         }
 
+    # 1. Exact Pattern Match Check (bypass probability dilution for direct pattern matches)
+    input_stemmed = tokenize_and_stem(clean_message)
+    for intent in runtime.intents.get("intents", []):
+        for pattern in intent.get("patterns", []):
+            pattern_stemmed = tokenize_and_stem(pattern)
+            if input_stemmed == pattern_stemmed and len(input_stemmed) > 0:
+                return {
+                    "response": random.choice(intent["responses"]),
+                    "tag": intent["tag"],
+                    "confidence": 1.0,
+                }
+
+    # 2. Classifier Prediction (for variations of patterns)
     tag, confidence = predict_intent(clean_message, runtime)
     if confidence < CONFIDENCE_THRESHOLD:
         fallback = runtime.responses_by_tag.get(
             "fallback_help",
-            ["I'm not confident about that yet. Add more examples to intents.json to improve me."],
+            ["I may need more examples in intents.json for that topic. Try rephrasing with simpler wording."],
         )
         return {
             "response": random.choice(fallback),
