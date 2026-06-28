@@ -1,18 +1,34 @@
 import * as React from "react";
-import { FileText, Link, Mic, Plus, X, SendHorizontal } from "lucide-react";
+import {
+  FileText,
+  Link,
+  Mic,
+  Plus,
+  X,
+  SendHorizontal,
+  ArrowUp,
+} from "lucide-react";
 
-// Standard Button component style replacement
+/* ----------------------------------------------------------------
+ * Button — soft, cream-themed, with three variants
+ * ---------------------------------------------------------------- */
 export function Button({ children, className = "", variant = "outline", size, ...props }) {
-  const baseStyle = "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none";
-  
+  const baseStyle =
+    "inline-flex items-center justify-center rounded-full text-[13px] font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d97757]/40 disabled:opacity-40 disabled:pointer-events-none";
+
   const variants = {
-    ghost: "text-neutral-400 hover:bg-neutral-800 hover:text-white rounded-full",
-    outline: "border border-neutral-700/60 bg-transparent text-neutral-300 hover:bg-neutral-800 hover:text-white px-3 py-1.5 rounded-full",
-    primary: "bg-[#a8c7fa] text-[#041e49] hover:bg-[#c2e7ff] font-semibold rounded-full"
+    ghost:
+      "text-[#8a8680] hover:bg-[#f4f3ee] hover:text-[#1a1a1a] hover:shadow-soft",
+    outline:
+      "border border-[#e8e6df] bg-white text-[#57534d] hover:border-[#d8d4ca] hover:bg-[#fafaf7] hover:text-[#1a1a1a] px-3.5 py-1.5 shadow-soft",
+    primary:
+      "bg-[#d97757] text-white hover:bg-[#c4654a] font-medium shadow-soft",
+    soft:
+      "bg-[#f7ece5] text-[#c4654a] hover:bg-[#f0ddd0] hover:text-[#a8543c] px-3.5 py-1.5",
   };
 
   const sizes = {
-    icon: "h-9 w-9 p-1.5",
+    icon: "h-9 w-9 p-0",
     sm: "px-3 py-1 text-xs",
     md: "px-4 py-2",
   };
@@ -30,7 +46,9 @@ export function Button({ children, className = "", variant = "outline", size, ..
   );
 }
 
-// Self-contained AdvancedChatInput implementation
+/* ----------------------------------------------------------------
+ * AdvancedChatInput — Claude-style soft pill input on cream surface
+ * ---------------------------------------------------------------- */
 export function AdvancedChatInput({
   value,
   onChange,
@@ -43,35 +61,46 @@ export function AdvancedChatInput({
   isSending = false,
 }) {
   const textareaRef = React.useRef(null);
+  const [isFocused, setIsFocused] = React.useState(false);
 
-  // Auto-resize the text area dynamically
+  // Auto-resize the textarea dynamically
   React.useEffect(() => {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto";
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 180)}px`;
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
     }
   }, [value]);
 
+  const hasContent = value.trim() || files.length > 0;
+
   return (
-    <div className="w-full rounded-[28px] border border-neutral-800 bg-[#1e1f20] px-4 py-3 shadow-lg focus-within:border-neutral-700/80 transition duration-200">
+    <div
+      className={`w-full rounded-[24px] bg-white px-3 py-2 transition-all duration-200 border ${
+        isFocused
+          ? "border-[#d97757]/40 shadow-input-focus"
+          : "border-[#e8e6df] shadow-input hover:border-[#d8d4ca] hover:shadow-soft-lg"
+      }`}
+    >
       {/* File attachment preview chips */}
       {files.length > 0 && (
-        <div className="mb-3 flex flex-wrap gap-2 animate-fadeIn">
+        <div className="mb-2 flex flex-wrap gap-1.5 animate-fadeIn px-1 pt-1">
           {files.map((file) => (
             <div
               key={file.id}
-              className="flex items-center gap-1.5 rounded-full bg-neutral-800 px-3 py-1 text-xs text-neutral-300 border border-neutral-700/50"
+              className="group flex items-center gap-1.5 rounded-full bg-[#f4f3ee] border border-[#e8e6df] px-2.5 py-1 text-xs text-[#57534d] hover:border-[#d8d4ca] transition"
             >
-              {file.icon || <FileText className="h-3 w-3 text-neutral-400" />}
-              <span className="max-w-[120px] truncate">{file.name}</span>
+              {file.icon || <FileText className="h-3 w-3 text-[#d97757]" />}
+              <span className="max-w-[120px] truncate font-medium">
+                {file.name}
+              </span>
               <button
                 type="button"
                 onClick={() => onFileRemove(file.id)}
-                className="rounded-full p-0.5 hover:bg-neutral-700 text-neutral-400 hover:text-neutral-200 transition"
+                className="rounded-full p-0.5 hover:bg-[#e8e6df] text-[#8a8680] hover:text-[#1a1a1a] transition"
                 aria-label="Remove attachment"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-3 w-3" />
               </button>
             </div>
           ))}
@@ -84,14 +113,16 @@ export function AdvancedChatInput({
           ref={textareaRef}
           value={value}
           onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           rows={1}
-          className="flex-1 resize-none bg-transparent py-1 px-1 text-[15px] leading-6 text-neutral-100 outline-none placeholder:text-neutral-500 max-h-[180px] min-h-[28px]"
+          className="flex-1 resize-none bg-transparent py-2 px-2 text-[15px] leading-6 text-[#1a1a1a] outline-none placeholder:text-[#b8b3aa] max-h-[200px] min-h-[28px]"
           {...textareaProps}
         />
 
         {/* Buttons Row */}
-        <div className="flex items-center gap-1 shrink-0 pb-0.5">
+        <div className="flex items-center gap-0.5 shrink-0 pb-1">
           {/* Custom controls (Mic, Link, etc.) */}
           {actionIcons}
 
@@ -99,15 +130,19 @@ export function AdvancedChatInput({
           <button
             type="button"
             onClick={onSend}
-            disabled={(!value.trim() && files.length === 0) || isSending}
+            disabled={!hasContent || isSending}
             className={`grid h-9 w-9 place-items-center rounded-full transition-all duration-200 ${
-              value.trim() || files.length > 0
-                ? "bg-[#a8c7fa] text-[#041e49] hover:bg-[#c2e7ff] active:scale-95"
-                : "bg-transparent text-neutral-500 cursor-not-allowed"
+              hasContent
+                ? "bg-[#d97757] text-white hover:bg-[#c4654a] active:scale-90 shadow-soft"
+                : "bg-[#f4f3ee] text-[#b8b3aa] cursor-not-allowed"
             }`}
             aria-label="Send message"
           >
-            <SendHorizontal className="h-4.5 w-4.5" />
+            {isSending ? (
+              <div className="h-4 w-4 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+            ) : (
+              <ArrowUp className="h-[18px] w-[18px]" strokeWidth={2.5} />
+            )}
           </button>
         </div>
       </div>
@@ -115,50 +150,47 @@ export function AdvancedChatInput({
   );
 }
 
-// Keeping the demo structure if they want to run it independently, converted to JS
+/* ----------------------------------------------------------------
+ * Standalone demo (kept for parity with original)
+ * ---------------------------------------------------------------- */
 export default function AdvancedChatInputDemo() {
   const [inputValue, setInputValue] = React.useState("");
   const [files, setFiles] = React.useState([]);
 
-  // Handler to add a new file attachment
   const handleAddFile = () => {
     const newFile = {
       id: Date.now(),
       name: `document_${files.length + 1}.pdf`,
-      icon: <FileText className="h-4 w-4 text-neutral-400" />,
+      icon: <FileText className="h-4 w-4 text-[#d97757]" />,
     };
     setFiles((prevFiles) => [...prevFiles, newFile]);
   };
 
-  // Handler to remove a file by its ID
   const handleRemoveFile = (id) => {
     setFiles((prevFiles) => prevFiles.filter((file) => file.id !== id));
   };
 
-  // Handler for the send action
   const handleSend = () => {
     if (!inputValue && files.length === 0) return;
     console.log("Sending:", {
       message: inputValue,
       files: files.map((f) => f.name),
     });
-    // Reset state after sending
     setInputValue("");
     setFiles([]);
   };
 
-  // Define action icons to be passed as a prop
   const actionIcons = [
     <Button key="link" variant="ghost" size="icon" aria-label="Attach link">
-      <Link className="h-4 w-4 text-neutral-400" />
+      <Link className="h-4 w-4" />
     </Button>,
     <Button key="mic" variant="ghost" size="icon" aria-label="Use microphone">
-      <Mic className="h-4 w-4 text-neutral-400" />
+      <Mic className="h-4 w-4" />
     </Button>,
   ];
 
   return (
-    <div className="flex min-h-[400px] w-full flex-col items-center justify-center gap-4 bg-[#131314] p-4">
+    <div className="flex min-h-[400px] w-full flex-col items-center justify-center gap-4 bg-[#fafaf7] p-4">
       <div className="w-full max-w-lg">
         <AdvancedChatInput
           value={inputValue}
@@ -179,7 +211,6 @@ export default function AdvancedChatInputDemo() {
         />
       </div>
 
-      {/* Demo control to add files dynamically */}
       <Button variant="outline" onClick={handleAddFile}>
         <Plus className="mr-2 h-4 w-4" />
         Attach a file

@@ -3,9 +3,45 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  background: #131314;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color-scheme: light;
+
+  /* Surfaces */
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --surface-subtle: #f4f3ee;
+  --surface-hover: #efece4;
+  --surface-sunken: #f0eee6;
+
+  /* Borders */
+  --border: #e8e6df;
+  --border-strong: #d8d4ca;
+  --border-soft: #efede5;
+
+  /* Text */
+  --text: #1a1a1a;
+  --text-secondary: #57534d;
+  --text-tertiary: #8a8680;
+  --text-faint: #b8b3aa;
+
+  /* Accent (Claude-style coral) */
+  --accent: #d97757;
+  --accent-hover: #c4654a;
+  --accent-soft: #f7ece5;
+  --accent-softer: #fbf3ee;
+
+  /* Semantic */
+  --success: #4f7a4f;
+  --success-soft: #e8f0e6;
+  --warning: #b8862f;
+  --warning-soft: #faf2dc;
+  --danger: #c44a3a;
+  --danger-soft: #f8e5e0;
+
+  background: var(--bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-serif: 'Source Serif Pro', 'Charter', 'Iowan Old Style', 'Apple Garamond', 'Baskerville', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
 }
 
 * {
@@ -16,40 +52,65 @@ html,
 body,
 #root {
   min-height: 100%;
-  background: #131314;
+  background: var(--bg);
 }
 
 body {
   margin: 0;
-  color: #e3e3e3;
+  color: var(--text);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 button,
 input,
 textarea {
   font: inherit;
+  color: inherit;
 }
 
-/* Custom Scrollbars */
+.font-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "kern", "liga", "calt";
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ---------- Scrollbars ---------- */
 .chat-scrollbar::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
-
 .chat-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .chat-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 999px;
 }
-
 .chat-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.24);
+  background: rgba(0, 0, 0, 0.18);
 }
 
-/* Animations */
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+}
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* ---------- Animations ---------- */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -60,9 +121,22 @@ textarea {
     transform: translateY(0);
   }
 }
-
 .animate-fadeIn {
-  animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: fadeIn 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes shimmer {
@@ -73,24 +147,114 @@ textarea {
     background-position: 200% 0;
   }
 }
-
 .shimmer-bg {
-  background: linear-gradient(90deg, #1e1f20 25%, #2a2b2d 50%, #1e1f20 75%);
+  background: linear-gradient(
+    90deg,
+    var(--surface-subtle) 25%,
+    var(--surface-hover) 50%,
+    var(--surface-subtle) 75%
+  );
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
+  animation: shimmer 1.6s infinite linear;
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(0.98);
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.97);
   }
   50% {
-    opacity: 0.95;
-    transform: scale(1.02);
+    opacity: 1;
+    transform: scale(1.03);
   }
 }
-
 .animate-pulseGlow {
   animation: pulseGlow 3s infinite ease-in-out;
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+.typing-dot {
+  animation: typing 1.4s infinite ease-in-out;
+}
+.typing-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.animate-popIn {
+  animation: popIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-slideInLeft {
+  animation: slideInLeft 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* ---------- Utility ---------- */
+.text-balance {
+  text-wrap: balance;
+}
+
+.shadow-soft {
+  box-shadow:
+    0 1px 2px rgba(26, 26, 26, 0.04),
+    0 4px 12px rgba(26, 26, 26, 0.04);
+}
+
+.shadow-soft-lg {
+  box-shadow:
+    0 2px 4px rgba(26, 26, 26, 0.04),
+    0 12px 32px rgba(26, 26, 26, 0.06);
+}
+
+.shadow-input {
+  box-shadow:
+    0 1px 2px rgba(26, 26, 26, 0.03),
+    0 8px 24px rgba(26, 26, 26, 0.05);
+}
+
+.shadow-input-focus {
+  box-shadow:
+    0 1px 2px rgba(26, 26, 26, 0.04),
+    0 12px 36px rgba(217, 119, 87, 0.12),
+    0 0 0 1px var(--accent);
+}
+
+.bg-grid {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(26, 26, 26, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
 }
