@@ -2,46 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =================================================================
+   THEME TOKENS
+   -----------------------------------------------------------------
+   Each semantic color is exposed in two forms:
+     --c-<name>      "R G B" channels  -> consumed by Tailwind
+                                       (tailwind.config.js) so
+                                       opacity modifiers work.
+     --<name>        plain hex/rgb     -> legacy/inline usage.
+
+   Switching <html> between (no class) and .dark flips every token.
+   ================================================================= */
 :root {
   color-scheme: light;
 
   /* Surfaces */
+  --c-bg: 250 250 247;
+  --c-surface: 255 255 255;
+  --c-surface-subtle: 244 243 238;
+  --c-surface-hover: 239 236 228;
+  --c-surface-sunken: 240 238 230;
+
+  /* Borders */
+  --c-border: 232 230 223;
+  --c-border-strong: 216 212 202;
+  --c-border-soft: 239 237 229;
+
+  /* Text */
+  --c-text: 26 26 26;
+  --c-text-secondary: 87 83 77;
+  --c-text-tertiary: 138 134 128;
+  --c-text-faint: 184 179 170;
+
+  /* Accent (Claude-style coral) */
+  --c-accent: 217 119 87;
+  --c-accent-hover: 196 101 74;
+  --c-accent-soft: 247 236 229;
+
+  /* Semantic */
+  --c-success: 79 122 79;
+  --c-success-soft: 232 240 230;
+  --c-warning: 184 134 47;
+  --c-warning-soft: 250 242 220;
+  --c-danger: 196 74 58;
+  --c-danger-soft: 248 229 224;
+
+  /* User bubble background */
+  --c-user-bubble: 244 243 238;
+
+  /* Scrollbar / shadow base derived from text color */
+  --scroll-thumb: rgba(0, 0, 0, 0.08);
+  --scroll-thumb-hover: rgba(0, 0, 0, 0.18);
+  --shadow-rgb: 26 26 26;
+
+  /* Legacy hex aliases (kept for inline / non-Tailwind references) */
   --bg: #fafaf7;
   --surface: #ffffff;
   --surface-subtle: #f4f3ee;
   --surface-hover: #efece4;
-  --surface-sunken: #f0eee6;
-
-  /* Borders */
   --border: #e8e6df;
-  --border-strong: #d8d4ca;
-  --border-soft: #efede5;
-
-  /* Text */
   --text: #1a1a1a;
-  --text-secondary: #57534d;
-  --text-tertiary: #8a8680;
-  --text-faint: #b8b3aa;
-
-  /* Accent (Claude-style coral) */
   --accent: #d97757;
   --accent-hover: #c4654a;
-  --accent-soft: #f7ece5;
-  --accent-softer: #fbf3ee;
-
-  /* Semantic */
-  --success: #4f7a4f;
-  --success-soft: #e8f0e6;
-  --warning: #b8862f;
-  --warning-soft: #faf2dc;
-  --danger: #c44a3a;
-  --danger-soft: #f8e5e0;
-
-  background: var(--bg);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --font-serif: 'Source Serif Pro', 'Charter', 'Iowan Old Style', 'Apple Garamond', 'Baskerville', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
+  background: var(--bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html.dark {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --c-bg: 23 23 24;            /* near-black, slightly warm */
+  --c-surface: 32 32 34;
+  --c-surface-subtle: 38 38 40;
+  --c-surface-hover: 46 46 49;
+  --c-surface-sunken: 30 30 32;
+
+  /* Borders */
+  --c-border: 49 49 52;
+  --c-border-strong: 66 66 70;
+  --c-border-soft: 42 42 45;
+
+  /* Text */
+  --c-text: 237 237 234;
+  --c-text-secondary: 173 172 165;
+  --c-text-tertiary: 138 137 130;
+  --c-text-faint: 96 96 92;
+
+  /* Accent — slightly brightened coral for dark contrast */
+  --c-accent: 231 138 104;
+  --c-accent-hover: 238 152 121;
+  --c-accent-soft: 58 40 33;
+
+  /* Semantic */
+  --c-success: 122 173 120;
+  --c-success-soft: 33 49 32;
+  --c-warning: 214 172 86;
+  --c-warning-soft: 58 47 24;
+  --c-danger: 224 110 95;
+  --c-danger-soft: 58 32 30;
+
+  /* User bubble — a touch lighter than surface */
+  --c-user-bubble: 38 38 40;
+
+  /* Light-on-dark scrollbars + softer shadows */
+  --scroll-thumb: rgba(255, 255, 255, 0.10);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.22);
+  --shadow-rgb: 0 0 0;
+
+  /* Legacy hex aliases */
+  --bg: #171718;
+  --surface: #202022;
+  --surface-subtle: #262628;
+  --surface-hover: #2e2e31;
+  --border: #313134;
+  --text: #ededea;
+  --accent: #e78a68;
+  --accent-hover: #ee9879;
 }
 
 * {
@@ -81,71 +162,54 @@ textarea {
 }
 
 /* ---------- Scrollbars ---------- */
-.chat-scrollbar::-webkit-scrollbar {
+.chat-scrollbar::-webkit-scrollbar,
+.sidebar-scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
-.chat-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.chat-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.08);
-  border-radius: 999px;
-}
-.chat-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.18);
-}
-
 .sidebar-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
+.chat-scrollbar::-webkit-scrollbar-track,
 .sidebar-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+.chat-scrollbar::-webkit-scrollbar-thumb,
 .sidebar-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--scroll-thumb);
   border-radius: 999px;
 }
+.chat-scrollbar::-webkit-scrollbar-thumb:hover,
 .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.14);
+  background: var(--scroll-thumb-hover);
+}
+
+/* Firefox */
+* {
+  scrollbar-color: var(--scroll-thumb) transparent;
+  scrollbar-width: thin;
 }
 
 /* ---------- Animations ---------- */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeIn {
   animation: fadeIn 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeInUp {
   animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 .shimmer-bg {
   background: linear-gradient(
@@ -159,65 +223,34 @@ textarea {
 }
 
 @keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 0.75;
-    transform: scale(0.97);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.03);
-  }
+  0%, 100% { opacity: 0.75; transform: scale(0.97); }
+  50%      { opacity: 1; transform: scale(1.03); }
 }
 .animate-pulseGlow {
   animation: pulseGlow 3s infinite ease-in-out;
 }
 
 @keyframes typing {
-  0%,
-  60%,
-  100% {
-    opacity: 0.25;
-    transform: translateY(0);
-  }
-  30% {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
+  0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+  30%           { opacity: 1; transform: translateY(-3px); }
 }
 .typing-dot {
   animation: typing 1.4s infinite ease-in-out;
 }
-.typing-dot:nth-child(2) {
-  animation-delay: 0.18s;
-}
-.typing-dot:nth-child(3) {
-  animation-delay: 0.36s;
-}
+.typing-dot:nth-child(2) { animation-delay: 0.18s; }
+.typing-dot:nth-child(3) { animation-delay: 0.36s; }
 
 @keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
 }
 .animate-popIn {
   animation: popIn 0.22s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 @keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 .animate-slideInLeft {
   animation: slideInLeft 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
@@ -228,33 +261,32 @@ textarea {
   text-wrap: balance;
 }
 
+/* Shadow helpers use a theme-aware base color so dark mode shadows
+   stay subtle instead of turning pure-black/opaque. */
 .shadow-soft {
   box-shadow:
-    0 1px 2px rgba(26, 26, 26, 0.04),
-    0 4px 12px rgba(26, 26, 26, 0.04);
+    0 1px 2px rgba(var(--shadow-rgb) / 0.04),
+    0 4px 12px rgba(var(--shadow-rgb) / 0.04);
 }
-
 .shadow-soft-lg {
   box-shadow:
-    0 2px 4px rgba(26, 26, 26, 0.04),
-    0 12px 32px rgba(26, 26, 26, 0.06);
+    0 2px 4px rgba(var(--shadow-rgb) / 0.04),
+    0 12px 32px rgba(var(--shadow-rgb) / 0.06);
 }
-
 .shadow-input {
   box-shadow:
-    0 1px 2px rgba(26, 26, 26, 0.03),
-    0 8px 24px rgba(26, 26, 26, 0.05);
+    0 1px 2px rgba(var(--shadow-rgb) / 0.03),
+    0 8px 24px rgba(var(--shadow-rgb) / 0.05);
 }
-
 .shadow-input-focus {
   box-shadow:
-    0 1px 2px rgba(26, 26, 26, 0.04),
-    0 12px 36px rgba(217, 119, 87, 0.12),
+    0 1px 2px rgba(var(--shadow-rgb) / 0.04),
+    0 12px 36px rgb(var(--c-accent) / 0.12),
     0 0 0 1px var(--accent);
 }
 
 .bg-grid {
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(26, 26, 26, 0.04) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, rgba(var(--c-text) / 0.05) 1px, transparent 0);
   background-size: 24px 24px;
 }
