@@ -1044,8 +1044,8 @@ function App() {
                               {opt.name}
                             </span>
                             {active && (
-                              <span className="text-[9.5px] font-semibold uppercase tracking-wider text-white bg-accent px-1.5 py-0.5 rounded-full whitespace-nowrap">
-                                Currently in use
+                              <span className="text-[9.5px] font-semibold uppercase tracking-wider text-white bg-accent px-0.5 py-0.5 rounded-full whitespace-nowrap items-center">
+                                
                               </span>
                             )}
                           </span>
