@@ -1,7 +1,7 @@
 import threading
 from pathlib import Path
 
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, Response, jsonify, request, send_from_directory
 
 from bot_engine import (
     INTENTS_PATH,
@@ -11,6 +11,8 @@ from bot_engine import (
     generate_response,
     load_or_train_bot,
 )
+from groq_engine import is_available as groq_is_available
+from groq_engine import stream_groq_response
 
 BASE_DIR = Path(__file__).resolve().parent
 FRONTEND_DIST = BASE_DIR / "frontend" / "dist"
@@ -49,6 +51,7 @@ def create_app() -> Flask:
                 "pattern_count": runtime.pattern_count,
                 "model_file": MODEL_PATH.name,
                 "knowledge_base": INTENTS_PATH.name,
+                "meta_available": groq_is_available(),
             }
         )
 
@@ -58,6 +61,20 @@ def create_app() -> Flask:
         message = str(payload.get("message", ""))
         runtime = get_bot_runtime()
         return jsonify(generate_response(message, runtime))
+
+    @flask_app.post("/api/chat/meta")
+    def chat_meta():
+        """SakuPilot Meta — streamed (SSE) responses from Groq."""
+        payload = request.get_json(silent=True) or {}
+        message = str(payload.get("message", ""))
+        return Response(
+            stream_groq_response(message),
+            mimetype="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "X-Accel-Buffering": "no",  # disable proxy buffering
+            },
+        )
 
     @flask_app.route("/", defaults={"path": ""})
     @flask_app.route("/<path:path>")
