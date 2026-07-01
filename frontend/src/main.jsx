@@ -1204,12 +1204,32 @@ function App() {
             ) : (
               /* ---------------- Conversation Thread ---------------- */
               <div className="space-y-10 py-4 animate-fadeIn">
-                {messages.map((message) => (
-                  <ChatMessageRow key={message.id} message={message} />
-                ))}
+                {messages
+                  .filter((message) => !(message.streaming && !message.content))
+                  .map((message) => (
+                    <ChatMessageRow key={message.id} message={message} />
+                  ))}
 
-                {/* Loading state */}
-                {isSending && (
+                {/* Loading state — shown while waiting for the assistant's
+                    reply to actually start. For the local engine that's the
+                    whole request (no placeholder exists until the response
+                    lands). For Meta, a placeholder is created immediately so
+                    tokens can stream into it — so here we keep showing the
+                    dots only until that placeholder has received its first
+                    bit of text, then hand off to the live-streaming bubble.
+                    Without the `!content` check, this block would keep
+                    rendering next to the real message for the whole stream
+                    and only disappear at the very end, looking like an empty
+                    message got deleted and swapped for the final answer. */}
+                {isSending &&
+                  (() => {
+                    const lastMessage = messages[messages.length - 1];
+                    return (
+                      !lastMessage ||
+                      lastMessage.role !== 'assistant' ||
+                      (lastMessage.streaming && !lastMessage.content)
+                    );
+                  })() && (
                   <div className="flex items-start gap-4 animate-fadeIn">
                     <Avatar role="assistant" size={32} />
                     <div className="flex-1 space-y-3 pt-1">
