@@ -64,4 +64,4 @@ Then open `http://127.0.0.1:5000`. Flask serves the compiled React app from `fro
 
 ## Editing The Bot
 
-Update `intents.json` with new tags, patterns, and responses. The backend checks the file hash on each API request and retrains automatically when the knowledge base changes. The trained model is saved as `chatbot_model.pkl`. Tiny changes.
+Update `intents.json` with new tags, patterns, and responses. The backend checks the file hash on each API request and retrains automatically when the knowledge base changes. The trained model is saved as `chatbot_model.pkl`. Tiny changes.Tiny
